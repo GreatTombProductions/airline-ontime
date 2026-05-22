@@ -1,0 +1,1 @@
+[{"carrier":"MQ","carrier_name":"Envoy Air (American Eagle)","dest":"ORD","dest_city":"Chicago, IL","flights":1586,"on_time_pct":76.2,"cancel_pct":2.7,"avg_delay":19.6},{"carrier":"MQ","carrier_name":"Envoy Air (American Eagle)","dest":"DFW","dest_city":"Dallas/Fort Worth, TX","flights":1453,"on_time_pct":80.5,"cancel_pct":1.4,"avg_delay":20.2}]

@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"DEN","origin_city":"Denver, CO","flights":3832,"on_time_pct":76.5,"cancel_pct":1.0,"avg_delay":18.5},{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"SLC","origin_city":"Salt Lake City, UT","flights":338,"on_time_pct":92.0,"cancel_pct":0.0,"avg_delay":12.5}]

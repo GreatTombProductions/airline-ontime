@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"ORD","origin_city":"Chicago, IL","flights":1080,"on_time_pct":75.8,"cancel_pct":3.7,"avg_delay":15.2},{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"FOD","origin_city":"Fort Dodge, IA","flights":174,"on_time_pct":67.8,"cancel_pct":2.9,"avg_delay":44.2}]

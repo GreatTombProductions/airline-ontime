@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"DEN","dest_city":"Denver, CO","flights":760,"on_time_pct":78.2,"cancel_pct":3.3,"avg_delay":19.4},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"DVL","dest_city":"Devils Lake, ND","flights":507,"on_time_pct":82.6,"cancel_pct":4.1,"avg_delay":21.1}]

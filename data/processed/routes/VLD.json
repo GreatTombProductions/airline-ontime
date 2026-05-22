@@ -1,0 +1,1 @@
+[{"carrier":"9E","carrier_name":"Endeavor Air (Delta Connection)","dest":"ATL","dest_city":"Atlanta, GA","flights":721,"on_time_pct":83.1,"cancel_pct":2.4,"avg_delay":13.2},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"ATL","dest_city":"Atlanta, GA","flights":60,"on_time_pct":81.7,"cancel_pct":0.0,"avg_delay":10.8}]

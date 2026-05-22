@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"DTW","dest_city":"Detroit, MI","flights":738,"on_time_pct":78.3,"cancel_pct":1.8,"avg_delay":25.0},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"MSP","dest_city":"Minneapolis, MN","flights":718,"on_time_pct":79.2,"cancel_pct":1.5,"avg_delay":23.9}]

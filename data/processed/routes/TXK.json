@@ -1,0 +1,1 @@
+[{"carrier":"MQ","carrier_name":"Envoy Air (American Eagle)","dest":"DFW","dest_city":"Dallas/Fort Worth, TX","flights":855,"on_time_pct":80.2,"cancel_pct":1.9,"avg_delay":17.5},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"DFW","dest_city":"Dallas/Fort Worth, TX","flights":609,"on_time_pct":74.7,"cancel_pct":5.1,"avg_delay":21.9}]

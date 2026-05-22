@@ -1,0 +1,1 @@
+[{"carrier":"MQ","carrier_name":"Envoy Air (American Eagle)","origin":"DFW","origin_city":"Dallas/Fort Worth, TX","flights":1125,"on_time_pct":72.9,"cancel_pct":2.2,"avg_delay":17.0},{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"DFW","origin_city":"Dallas/Fort Worth, TX","flights":334,"on_time_pct":79.6,"cancel_pct":3.3,"avg_delay":18.5}]

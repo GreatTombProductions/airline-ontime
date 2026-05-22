@@ -1,0 +1,1 @@
+[{"carrier":"UA","carrier_name":"United Airlines","dest":"SPN","dest_city":"Saipan, TT","flights":733,"on_time_pct":95.1,"cancel_pct":0.4,"avg_delay":3.9},{"carrier":"UA","carrier_name":"United Airlines","dest":"HNL","dest_city":"Honolulu, HI","flights":731,"on_time_pct":92.5,"cancel_pct":1.1,"avg_delay":5.4}]

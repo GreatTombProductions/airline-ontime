@@ -1,0 +1,16 @@
+{
+  "total_flights": 14080680,
+  "total_cancelled": 199191,
+  "total_on_time": 10896885,
+  "overall_on_time_pct": 77.4,
+  "carrier_count": 15,
+  "airport_count": 354,
+  "route_count": 12132,
+  "date_range": {
+    "start": "2024-01",
+    "end": "2025-12"
+  },
+  "source": "Bureau of Transportation Statistics (BTS)",
+  "source_url": "https://www.transtats.bts.gov/ontime/",
+  "data_freshness": "Monthly, typically 2-3 months lag"
+}

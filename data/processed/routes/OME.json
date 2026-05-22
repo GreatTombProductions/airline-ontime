@@ -1,0 +1,1 @@
+[{"carrier":"AS","carrier_name":"Alaska Airlines","dest":"ANC","dest_city":"Anchorage, AK","flights":661,"on_time_pct":78.1,"cancel_pct":2.6,"avg_delay":10.6},{"carrier":"AS","carrier_name":"Alaska Airlines","dest":"OTZ","dest_city":"Kotzebue, AK","flights":62,"on_time_pct":74.2,"cancel_pct":9.7,"avg_delay":8.7}]

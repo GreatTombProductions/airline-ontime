@@ -1,0 +1,1 @@
+[{"carrier":"G4","carrier_name":"Allegiant Air","origin":"AZA","origin_city":"Phoenix, AZ","flights":238,"on_time_pct":91.2,"cancel_pct":0.8,"avg_delay":5.0},{"carrier":"G4","carrier_name":"Allegiant Air","origin":"PGD","origin_city":"Punta Gorda, FL","flights":87,"on_time_pct":89.7,"cancel_pct":0.0,"avg_delay":6.6}]

@@ -1,0 +1,1 @@
+[{"carrier":"G4","carrier_name":"Allegiant Air","dest":"AZA","dest_city":"Phoenix, AZ","flights":238,"on_time_pct":77.3,"cancel_pct":0.8,"avg_delay":13.9},{"carrier":"G4","carrier_name":"Allegiant Air","dest":"PGD","dest_city":"Punta Gorda, FL","flights":87,"on_time_pct":75.9,"cancel_pct":0.0,"avg_delay":37.2}]

@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"PHX","dest_city":"Phoenix, AZ","flights":2687,"on_time_pct":82.6,"cancel_pct":0.9,"avg_delay":18.4},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"DFW","dest_city":"Dallas/Fort Worth, TX","flights":870,"on_time_pct":76.8,"cancel_pct":1.4,"avg_delay":27.2}]

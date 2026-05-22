@@ -1,0 +1,1 @@
+[{"carrier":"MQ","carrier_name":"Envoy Air (American Eagle)","origin":"ORD","origin_city":"Chicago, IL","flights":1584,"on_time_pct":70.1,"cancel_pct":2.7,"avg_delay":19.5},{"carrier":"MQ","carrier_name":"Envoy Air (American Eagle)","origin":"DFW","origin_city":"Dallas/Fort Worth, TX","flights":1455,"on_time_pct":80.1,"cancel_pct":1.2,"avg_delay":14.8}]

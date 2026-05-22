@@ -1,0 +1,1 @@
+[{"carrier":"AS","carrier_name":"Alaska Airlines","origin":"ANC","origin_city":"Anchorage, AK","flights":667,"on_time_pct":86.4,"cancel_pct":4.0,"avg_delay":7.4},{"carrier":"AS","carrier_name":"Alaska Airlines","origin":"OME","origin_city":"Nome, AK","flights":62,"on_time_pct":74.2,"cancel_pct":9.7,"avg_delay":8.7}]

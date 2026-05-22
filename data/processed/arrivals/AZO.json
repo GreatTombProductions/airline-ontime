@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"DTW","origin_city":"Detroit, MI","flights":1995,"on_time_pct":78.4,"cancel_pct":1.6,"avg_delay":20.1},{"carrier":"MQ","carrier_name":"Envoy Air (American Eagle)","origin":"ORD","origin_city":"Chicago, IL","flights":596,"on_time_pct":72.1,"cancel_pct":4.5,"avg_delay":15.3}]

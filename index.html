@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airline On-Time Check</title>
+<meta name="description" content="Check airline on-time performance before you book. Compare carriers by route. 14M+ flights from BTS data.">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a25;
+  --border: #2a2a3a;
+  --text: #e0e0e8;
+  --text-dim: #8888a0;
+  --accent: #4a9eff;
+  --accent2: #6cb4ff;
+  --good: #4ade80;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --radius: 8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  padding: 40px 0 20px;
+}
+
+header h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+header p {
+  color: var(--text-dim);
+  font-size: 0.95em;
+}
+
+.search-section {
+  margin: 30px 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.95em;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab:hover { color: var(--text); }
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.search-box input, .search-box select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 1em;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-box input:focus, .search-box select:focus {
+  border-color: var(--accent);
+}
+
+.search-box input { flex: 1; }
+.search-box select { min-width: 140px; }
+
+#route-search {
+  display: none;
+}
+
+#route-search .search-box {
+  flex-wrap: wrap;
+}
+
+#route-search input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.hint {
+  color: var(--text-dim);
+  font-size: 0.85em;
+  margin-top: 4px;
+}
+
+/* Stats banner */
+.stats-banner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-card .value {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-card .label {
+  font-size: 0.8em;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* Carrier card */
+.carrier-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.carrier-card:hover {
+  border-color: var(--accent);
+}
+
+.carrier-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.carrier-name {
+  font-size: 1.15em;
+  font-weight: 600;
+}
+
+.carrier-code {
+  color: var(--text-dim);
+  font-size: 0.9em;
+}
+
+.carrier-metrics {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.metric {
+  text-align: center;
+}
+
+.metric .value {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.metric .label {
+  font-size: 0.75em;
+  color: var(--text-dim);
+}
+
+.carrier-detail {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.carrier-card.expanded .carrier-detail {
+  display: block;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .detail-grid { grid-template-columns: 1fr; }
+}
+
+.detail-section h3 {
+  font-size: 0.85em;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Delay cause bars */
+.cause-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.9em;
+}
+
+.cause-label {
+  width: 110px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.cause-track {
+  flex: 1;
+  height: 18px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0 8px;
+}
+
+.cause-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.cause-pct {
+  width: 40px;
+  text-align: right;
+  font-size: 0.85em;
+  color: var(--text-dim);
+}
+
+/* Monthly trend chart */
+.trend-chart {
+  width: 100%;
+  height: 120px;
+  margin-top: 8px;
+}
+
+/* Route comparison table */
+.route-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.9em;
+}
+
+.route-table th {
+  text-align: left;
+  padding: 8px 12px;
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid var(--border);
+}
+
+.route-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.route-table tr:hover td {
+  background: var(--surface2);
+}
+
+.route-table .flights {
+  color: var(--text-dim);
+}
+
+/* Airport table */
+.airport-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.airport-table th {
+  text-align: left;
+  padding: 8px 10px;
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.airport-table th:hover {
+  color: var(--accent);
+}
+
+.airport-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.airport-table tr:hover td {
+  background: var(--surface2);
+}
+
+.sort-arrow { font-size: 0.7em; margin-left: 4px; }
+
+/* Color coding */
+.pct-good { color: var(--good); }
+.pct-ok { color: var(--warn); }
+.pct-bad { color: var(--bad); }
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-dim);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-dim);
+}
+
+#results {
+  margin-top: 20px;
+}
+
+/* Route header */
+.route-header {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.route-header h2 {
+  font-size: 1.3em;
+  margin-bottom: 4px;
+}
+
+.route-header .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9em;
+}
+
+/* Footer */
+footer {
+  margin-top: 60px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.8em;
+}
+
+footer a { color: var(--accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* Airport ranking section */
+.airport-section {
+  margin-top: 20px;
+}
+
+.airport-section h2 {
+  font-size: 1.1em;
+  margin-bottom: 12px;
+}
+
+.airport-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover { color: var(--text); border-color: var(--text-dim); }
+.filter-btn.active { color: var(--accent); border-color: var(--accent); background: var(--surface2); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Airline On-Time Check</h1>
+    <p>Check on-time performance before you book. Compare airlines by route.</p>
+  </header>
+
+  <div id="stats-banner" class="stats-banner"></div>
+
+  <div class="search-section">
+    <div class="tabs">
+      <button class="tab active" data-tab="airline" onclick="switchTab('airline')">By Airline</button>
+      <button class="tab" data-tab="route" onclick="switchTab('route')">By Route</button>
+      <button class="tab" data-tab="airports" onclick="switchTab('airports')">Airports</button>
+    </div>
+
+    <div id="airline-search">
+      <div class="search-box">
+        <input type="text" id="airline-input" placeholder="Search airlines (e.g., Delta, Southwest, AA)" autocomplete="off">
+      </div>
+      <div class="hint">Click an airline to see delay causes and monthly trends</div>
+    </div>
+
+    <div id="route-search">
+      <div class="search-box">
+        <input type="text" id="origin-input" placeholder="From (airport code, e.g., LAX)" autocomplete="off" maxlength="3" style="text-transform:uppercase">
+        <input type="text" id="dest-input" placeholder="To (airport code, e.g., JFK)" autocomplete="off" maxlength="3" style="text-transform:uppercase">
+      </div>
+      <div class="hint">Enter origin and destination airport codes to compare airlines on that route</div>
+    </div>
+
+    <div id="airport-search" style="display:none">
+      <div class="airport-filters">
+        <button class="filter-btn active" data-sort="dep_delay_pct" onclick="sortAirports('dep_delay_pct')">Worst Departure Delays</button>
+        <button class="filter-btn" data-sort="arr_delay_pct" onclick="sortAirports('arr_delay_pct')">Worst Arrival Delays</button>
+        <button class="filter-btn" data-sort="departures" onclick="sortAirports('departures')">Busiest</button>
+      </div>
+      <div class="search-box">
+        <input type="text" id="airport-input" placeholder="Filter airports (e.g., Chicago, ATL)" autocomplete="off">
+      </div>
+    </div>
+  </div>
+
+  <div id="results">
+    <div class="loading">Loading data...</div>
+  </div>
+
+  <footer>
+    <p>Data: <a href="https://www.transtats.bts.gov/ontime/" target="_blank">Bureau of Transportation Statistics</a> | <span id="date-range"></span> | <span id="total-flights"></span> flights</p>
+    <p style="margin-top: 8px">On-time = arrived within 15 minutes of schedule. Avg delay = minutes late among completed flights.</p>
+  </footer>
+</div>
+
+<script>
+// State
+let carriers = [];
+let airports = [];
+let monthly = {};
+let meta = {};
+let routeCache = {};
+let currentTab = 'airline';
+let airportSort = 'dep_delay_pct';
+
+// Color coding
+function pctClass(pct, invert) {
+  if (invert) {
+    if (pct <= 1) return 'pct-good';
+    if (pct <= 3) return 'pct-ok';
+    return 'pct-bad';
+  }
+  if (pct >= 82) return 'pct-good';
+  if (pct >= 75) return 'pct-ok';
+  return 'pct-bad';
+}
+
+function delayClass(min) {
+  if (min <= 10) return 'pct-good';
+  if (min <= 20) return 'pct-ok';
+  return 'pct-bad';
+}
+
+function fmtNum(n) {
+  return n.toLocaleString();
+}
+
+// Tab switching
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.getElementById('airline-search').style.display = tab === 'airline' ? '' : 'none';
+  document.getElementById('route-search').style.display = tab === 'route' ? '' : 'none';
+  document.getElementById('airport-search').style.display = tab === 'airports' ? '' : 'none';
+
+  if (tab === 'airline') renderCarriers();
+  else if (tab === 'route') renderRoute();
+  else if (tab === 'airports') renderAirports();
+}
+
+// Carrier rendering
+function renderCarriers() {
+  const q = document.getElementById('airline-input').value.toLowerCase().trim();
+  const filtered = q
+    ? carriers.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q))
+    : carriers;
+
+  if (!filtered.length) {
+    document.getElementById('results').innerHTML = '<div class="empty-state">No airlines match your search</div>';
+    return;
+  }
+
+  const html = filtered.map(c => `
+    <div class="carrier-card" id="card-${c.code}" onclick="toggleCarrier('${c.code}')">
+      <div class="carrier-header">
+        <div>
+          <span class="carrier-name">${c.name}</span>
+          <span class="carrier-code">${c.code}</span>
+        </div>
+        <div class="carrier-metrics">
+          <div class="metric">
+            <div class="value ${pctClass(c.on_time_pct)}">${c.on_time_pct}%</div>
+            <div class="label">On Time</div>
+          </div>
+          <div class="metric">
+            <div class="value ${pctClass(c.cancel_pct, true)}">${c.cancel_pct}%</div>
+            <div class="label">Cancelled</div>
+          </div>
+          <div class="metric">
+            <div class="value ${delayClass(c.avg_arr_delay)}">${c.avg_arr_delay} min</div>
+            <div class="label">Avg Delay</div>
+          </div>
+          <div class="metric">
+            <div class="value">${fmtNum(c.flights)}</div>
+            <div class="label">Flights</div>
+          </div>
+        </div>
+      </div>
+      <div class="carrier-detail" id="detail-${c.code}"></div>
+    </div>
+  `).join('');
+
+  document.getElementById('results').innerHTML = html;
+}
+
+function toggleCarrier(code) {
+  const card = document.getElementById('card-' + code);
+  const detail = document.getElementById('detail-' + code);
+  const wasExpanded = card.classList.contains('expanded');
+
+  // Collapse all
+  document.querySelectorAll('.carrier-card.expanded').forEach(el => {
+    el.classList.remove('expanded');
+  });
+
+  if (wasExpanded) return;
+
+  card.classList.add('expanded');
+  const c = carriers.find(x => x.code === code);
+  if (!c) return;
+
+  // Delay causes
+  const causes = [
+    { label: 'Carrier', pct: c.delay_causes.carrier, color: '#f87171' },
+    { label: 'Late Aircraft', pct: c.delay_causes.late_aircraft, color: '#fbbf24' },
+    { label: 'NAS', pct: c.delay_causes.nas, color: '#4a9eff' },
+    { label: 'Weather', pct: c.delay_causes.weather, color: '#818cf8' },
+    { label: 'Security', pct: c.delay_causes.security, color: '#a78bfa' },
+  ];
+
+  const causesHtml = causes.map(ca => `
+    <div class="cause-bar">
+      <span class="cause-label">${ca.label}</span>
+      <div class="cause-track">
+        <div class="cause-fill" style="width:${ca.pct}%;background:${ca.color}"></div>
+      </div>
+      <span class="cause-pct">${ca.pct}%</span>
+    </div>
+  `).join('');
+
+  // Monthly trend
+  const mdata = monthly[code] || [];
+  let trendHtml = '';
+  if (mdata.length > 1) {
+    trendHtml = renderTrendSVG(mdata);
+  }
+
+  detail.innerHTML = `
+    <div class="detail-grid">
+      <div class="detail-section">
+        <h3>Delay Causes</h3>
+        ${causesHtml}
+        <p style="font-size:0.8em;color:var(--text-dim);margin-top:8px">
+          % of total delay minutes attributed to each cause
+        </p>
+      </div>
+      <div class="detail-section">
+        <h3>Monthly On-Time Rate</h3>
+        ${trendHtml || '<p style="color:var(--text-dim)">Insufficient data</p>'}
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div class="detail-section">
+        <h3>Additional Stats</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;font-size:0.9em">
+          <div>Avg Departure Delay: <strong>${c.avg_dep_delay} min</strong></div>
+          <div>Avg Arrival Delay: <strong>${c.avg_arr_delay} min</strong></div>
+          <div>Diverted: <strong>${c.divert_pct}%</strong></div>
+          <div>Total Flights: <strong>${fmtNum(c.flights)}</strong></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTrendSVG(data) {
+  const W = 380, H = 110, pad = { t: 10, r: 10, b: 25, l: 35 };
+  const iW = W - pad.l - pad.r;
+  const iH = H - pad.t - pad.b;
+
+  const vals = data.map(d => d.on_time_pct);
+  const mn = Math.min(...vals) - 3;
+  const mx = Math.max(...vals) + 3;
+  const range = mx - mn || 1;
+
+  const points = data.map((d, i) => {
+    const x = pad.l + (i / (data.length - 1)) * iW;
+    const y = pad.t + iH - ((d.on_time_pct - mn) / range) * iH;
+    return { x, y, d };
+  });
+
+  const line = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+
+  // Y-axis labels
+  const yTicks = [mn, (mn + mx) / 2, mx].map(v => ({
+    v: Math.round(v),
+    y: pad.t + iH - ((v - mn) / range) * iH
+  }));
+
+  // X-axis labels (show every 3rd month)
+  const xLabels = points.filter((_, i) => i % 3 === 0 || i === points.length - 1);
+
+  return `
+    <svg viewBox="0 0 ${W} ${H}" class="trend-chart" xmlns="http://www.w3.org/2000/svg">
+      ${yTicks.map(t => `
+        <line x1="${pad.l}" y1="${t.y}" x2="${W - pad.r}" y2="${t.y}" stroke="#2a2a3a" stroke-width="0.5"/>
+        <text x="${pad.l - 4}" y="${t.y + 3}" fill="#8888a0" font-size="9" text-anchor="end">${t.v}%</text>
+      `).join('')}
+      ${xLabels.map(p => `
+        <text x="${p.x}" y="${H - 4}" fill="#8888a0" font-size="8" text-anchor="middle">${p.d.month.slice(2)}</text>
+      `).join('')}
+      <path d="${line}" fill="none" stroke="#4a9eff" stroke-width="2"/>
+      ${points.map(p => `<circle cx="${p.x}" cy="${p.y}" r="2.5" fill="#4a9eff"/>`).join('')}
+    </svg>
+  `;
+}
+
+// Route rendering
+async function renderRoute() {
+  const origin = document.getElementById('origin-input').value.toUpperCase().trim();
+  const dest = document.getElementById('dest-input').value.toUpperCase().trim();
+
+  if (!origin || origin.length < 3) {
+    document.getElementById('results').innerHTML = '<div class="empty-state">Enter origin and destination airport codes to compare airlines</div>';
+    return;
+  }
+
+  if (!dest || dest.length < 3) {
+    document.getElementById('results').innerHTML = '<div class="empty-state">Enter a destination airport code</div>';
+    return;
+  }
+
+  document.getElementById('results').innerHTML = '<div class="loading">Loading route data...</div>';
+
+  // Load route data from origin shard
+  const routes = await loadRouteData(origin);
+  if (!routes) {
+    document.getElementById('results').innerHTML = `<div class="empty-state">No data for airport ${origin}. Check the code and try again.</div>`;
+    return;
+  }
+
+  const matching = routes.filter(r => r.dest === dest);
+  if (!matching.length) {
+    document.getElementById('results').innerHTML = `<div class="empty-state">No flights found from ${origin} to ${dest}. Try a different route.</div>`;
+    return;
+  }
+
+  matching.sort((a, b) => b.on_time_pct - a.on_time_pct);
+
+  const originCity = airports.find(a => a.code === origin);
+  const destCity = airports.find(a => a.code === dest);
+  const oName = originCity ? `${originCity.city}` : origin;
+  const dName = destCity ? `${destCity.city}` : dest;
+
+  let html = `
+    <div class="route-header">
+      <h2>${origin} &rarr; ${dest}</h2>
+      <div class="subtitle">${oName} to ${dName} &mdash; ${matching.length} airline${matching.length !== 1 ? 's' : ''}</div>
+    </div>
+    <table class="route-table">
+      <thead>
+        <tr>
+          <th>Airline</th>
+          <th>On-Time</th>
+          <th>Cancelled</th>
+          <th>Avg Delay</th>
+          <th>Flights</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  for (const r of matching) {
+    html += `
+      <tr>
+        <td><strong>${r.carrier_name}</strong> <span style="color:var(--text-dim)">${r.carrier}</span></td>
+        <td class="${pctClass(r.on_time_pct)}">${r.on_time_pct}%</td>
+        <td class="${pctClass(r.cancel_pct, true)}">${r.cancel_pct}%</td>
+        <td class="${delayClass(r.avg_delay)}">${r.avg_delay} min</td>
+        <td class="flights">${fmtNum(r.flights)}</td>
+      </tr>
+    `;
+  }
+
+  html += '</tbody></table>';
+  document.getElementById('results').innerHTML = html;
+}
+
+async function loadRouteData(origin) {
+  if (routeCache[origin]) return routeCache[origin];
+  try {
+    const resp = await fetch(`data/processed/routes/${origin}.json`);
+    if (!resp.ok) return null;
+    routeCache[origin] = await resp.json();
+    return routeCache[origin];
+  } catch { return null; }
+}
+
+// Airport rendering
+function renderAirports() {
+  const q = document.getElementById('airport-input').value.toLowerCase().trim();
+  let filtered = q
+    ? airports.filter(a => a.code.toLowerCase().includes(q) || a.city.toLowerCase().includes(q) || a.state.toLowerCase().includes(q))
+    : airports.slice();
+
+  // Sort
+  const desc = airportSort !== 'departures' ? true : true;
+  filtered.sort((a, b) => desc ? b[airportSort] - a[airportSort] : a[airportSort] - b[airportSort]);
+
+  // Show top 50
+  filtered = filtered.slice(0, 50);
+
+  if (!filtered.length) {
+    document.getElementById('results').innerHTML = '<div class="empty-state">No airports match</div>';
+    return;
+  }
+
+  let html = `
+    <table class="airport-table">
+      <thead>
+        <tr>
+          <th>Airport</th>
+          <th onclick="sortAirports('dep_delay_pct')">Dep Delay %${airportSort === 'dep_delay_pct' ? ' <span class="sort-arrow">&#9660;</span>' : ''}</th>
+          <th onclick="sortAirports('arr_delay_pct')">Arr Delay %${airportSort === 'arr_delay_pct' ? ' <span class="sort-arrow">&#9660;</span>' : ''}</th>
+          <th onclick="sortAirports('avg_dep_delay')">Avg Dep Delay${airportSort === 'avg_dep_delay' ? ' <span class="sort-arrow">&#9660;</span>' : ''}</th>
+          <th onclick="sortAirports('departures')">Flights${airportSort === 'departures' ? ' <span class="sort-arrow">&#9660;</span>' : ''}</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  for (const a of filtered) {
+    html += `
+      <tr>
+        <td><strong>${a.code}</strong> <span style="color:var(--text-dim)">${a.city}</span></td>
+        <td class="${a.dep_delay_pct > 25 ? 'pct-bad' : a.dep_delay_pct > 18 ? 'pct-ok' : 'pct-good'}">${a.dep_delay_pct}%</td>
+        <td class="${a.arr_delay_pct > 25 ? 'pct-bad' : a.arr_delay_pct > 18 ? 'pct-ok' : 'pct-good'}">${a.arr_delay_pct}%</td>
+        <td class="${delayClass(a.avg_dep_delay)}">${a.avg_dep_delay} min</td>
+        <td class="flights">${fmtNum(a.departures + a.arrivals)}</td>
+      </tr>
+    `;
+  }
+
+  html += '</tbody></table>';
+  document.getElementById('results').innerHTML = html;
+}
+
+function sortAirports(field) {
+  airportSort = field;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.sort === field));
+  renderAirports();
+}
+
+// Init
+async function init() {
+  try {
+    const [cResp, aResp, mResp, metaResp] = await Promise.all([
+      fetch('data/processed/carriers.json'),
+      fetch('data/processed/airports.json'),
+      fetch('data/processed/monthly.json'),
+      fetch('data/processed/meta.json'),
+    ]);
+
+    carriers = await cResp.json();
+    airports = await aResp.json();
+    monthly = await mResp.json();
+    meta = await metaResp.json();
+
+    // Stats banner
+    document.getElementById('stats-banner').innerHTML = `
+      <div class="stat-card"><div class="value">${(meta.total_flights / 1e6).toFixed(1)}M</div><div class="label">Flights Tracked</div></div>
+      <div class="stat-card"><div class="value">${meta.carrier_count}</div><div class="label">Airlines</div></div>
+      <div class="stat-card"><div class="value">${meta.airport_count}</div><div class="label">Airports</div></div>
+      <div class="stat-card"><div class="value">${meta.overall_on_time_pct}%</div><div class="label">Overall On-Time</div></div>
+    `;
+
+    document.getElementById('date-range').textContent = `${meta.date_range.start} to ${meta.date_range.end}`;
+    document.getElementById('total-flights').textContent = fmtNum(meta.total_flights);
+
+    renderCarriers();
+  } catch (e) {
+    document.getElementById('results').innerHTML = `<div class="empty-state">Error loading data: ${e.message}</div>`;
+  }
+}
+
+// Event listeners
+document.getElementById('airline-input').addEventListener('input', renderCarriers);
+
+let routeTimeout;
+document.getElementById('origin-input').addEventListener('input', () => {
+  clearTimeout(routeTimeout);
+  routeTimeout = setTimeout(renderRoute, 300);
+});
+document.getElementById('dest-input').addEventListener('input', () => {
+  clearTimeout(routeTimeout);
+  routeTimeout = setTimeout(renderRoute, 300);
+});
+
+document.getElementById('airport-input').addEventListener('input', renderAirports);
+
+init();
+</script>
+</body>
+</html>

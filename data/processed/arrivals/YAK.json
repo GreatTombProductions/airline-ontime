@@ -1,0 +1,1 @@
+[{"carrier":"AS","carrier_name":"Alaska Airlines","origin":"JNU","origin_city":"Juneau, AK","flights":725,"on_time_pct":82.3,"cancel_pct":1.5,"avg_delay":9.6},{"carrier":"AS","carrier_name":"Alaska Airlines","origin":"CDV","origin_city":"Cordova, AK","flights":725,"on_time_pct":85.2,"cancel_pct":0.8,"avg_delay":7.4}]

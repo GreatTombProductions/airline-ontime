@@ -1,0 +1,1 @@
+[{"carrier":"MQ","carrier_name":"Envoy Air (American Eagle)","origin":"ORD","origin_city":"Chicago, IL","flights":750,"on_time_pct":72.5,"cancel_pct":2.4,"avg_delay":18.1},{"carrier":"9E","carrier_name":"Endeavor Air (Delta Connection)","origin":"MSP","origin_city":"Minneapolis, MN","flights":731,"on_time_pct":84.3,"cancel_pct":0.8,"avg_delay":18.8}]

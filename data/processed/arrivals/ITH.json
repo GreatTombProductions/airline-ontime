@@ -1,0 +1,1 @@
+[{"carrier":"9E","carrier_name":"Endeavor Air (Delta Connection)","origin":"JFK","origin_city":"New York, NY","flights":727,"on_time_pct":81.4,"cancel_pct":3.4,"avg_delay":14.8},{"carrier":"YX","carrier_name":"Republic Airways","origin":"EWR","origin_city":"Newark, NJ","flights":87,"on_time_pct":83.9,"cancel_pct":5.7,"avg_delay":6.2}]

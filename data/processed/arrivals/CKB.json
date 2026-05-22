@@ -1,0 +1,1 @@
+[{"carrier":"G4","carrier_name":"Allegiant Air","origin":"SFB","origin_city":"Sanford, FL","flights":230,"on_time_pct":65.7,"cancel_pct":1.3,"avg_delay":28.2},{"carrier":"G4","carrier_name":"Allegiant Air","origin":"PIE","origin_city":"St. Petersburg, FL","flights":110,"on_time_pct":86.4,"cancel_pct":0.9,"avg_delay":16.6}]

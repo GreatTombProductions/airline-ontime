@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"IAD","dest_city":"Washington, DC","flights":731,"on_time_pct":78.1,"cancel_pct":2.6,"avg_delay":29.9},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"ORD","dest_city":"Chicago, IL","flights":727,"on_time_pct":74.1,"cancel_pct":2.9,"avg_delay":39.7}]

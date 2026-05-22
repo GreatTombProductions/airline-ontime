@@ -1,0 +1,1 @@
+[{"carrier":"AS","carrier_name":"Alaska Airlines","dest":"WRG","dest_city":"Wrangell, AK","flights":725,"on_time_pct":83.9,"cancel_pct":2.2,"avg_delay":8.2},{"carrier":"AS","carrier_name":"Alaska Airlines","dest":"JNU","dest_city":"Juneau, AK","flights":725,"on_time_pct":85.9,"cancel_pct":2.3,"avg_delay":8.4}]

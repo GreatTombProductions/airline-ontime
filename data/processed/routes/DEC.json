@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"ORD","dest_city":"Chicago, IL","flights":1255,"on_time_pct":73.4,"cancel_pct":2.1,"avg_delay":30.8},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"JLN","dest_city":"Joplin, MO","flights":152,"on_time_pct":79.6,"cancel_pct":5.9,"avg_delay":43.0}]

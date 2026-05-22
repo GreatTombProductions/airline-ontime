@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"DEN","dest_city":"Denver, CO","flights":1107,"on_time_pct":74.3,"cancel_pct":2.9,"avg_delay":36.1},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"LBL","dest_city":"Liberal, KS","flights":147,"on_time_pct":87.1,"cancel_pct":2.0,"avg_delay":13.5}]

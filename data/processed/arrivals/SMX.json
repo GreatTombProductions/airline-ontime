@@ -1,0 +1,1 @@
+[{"carrier":"G4","carrier_name":"Allegiant Air","origin":"LAS","origin_city":"Las Vegas, NV","flights":211,"on_time_pct":76.8,"cancel_pct":0.5,"avg_delay":18.4},{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"PHX","origin_city":"Phoenix, AZ","flights":154,"on_time_pct":86.4,"cancel_pct":1.9,"avg_delay":19.6}]

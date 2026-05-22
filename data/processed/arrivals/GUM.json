@@ -1,0 +1,1 @@
+[{"carrier":"UA","carrier_name":"United Airlines","origin":"SPN","origin_city":"Saipan, TT","flights":733,"on_time_pct":93.5,"cancel_pct":0.4,"avg_delay":6.6},{"carrier":"UA","carrier_name":"United Airlines","origin":"HNL","origin_city":"Honolulu, HI","flights":731,"on_time_pct":84.1,"cancel_pct":0.5,"avg_delay":8.8}]

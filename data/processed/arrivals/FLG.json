@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"PHX","origin_city":"Phoenix, AZ","flights":2687,"on_time_pct":83.3,"cancel_pct":1.0,"avg_delay":16.4},{"carrier":"OO","carrier_name":"SkyWest Airlines","origin":"DFW","origin_city":"Dallas/Fort Worth, TX","flights":870,"on_time_pct":72.8,"cancel_pct":1.7,"avg_delay":21.6}]

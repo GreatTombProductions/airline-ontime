@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"SFO","dest_city":"San Francisco, CA","flights":616,"on_time_pct":74.8,"cancel_pct":1.0,"avg_delay":27.4},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"DEN","dest_city":"Denver, CO","flights":202,"on_time_pct":69.8,"cancel_pct":0.0,"avg_delay":33.0}]

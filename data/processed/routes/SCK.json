@@ -1,0 +1,1 @@
+[{"carrier":"G4","carrier_name":"Allegiant Air","dest":"LAS","dest_city":"Las Vegas, NV","flights":810,"on_time_pct":65.6,"cancel_pct":0.7,"avg_delay":34.4},{"carrier":"G4","carrier_name":"Allegiant Air","dest":"PHX","dest_city":"Phoenix, AZ","flights":239,"on_time_pct":66.1,"cancel_pct":0.0,"avg_delay":28.5}]

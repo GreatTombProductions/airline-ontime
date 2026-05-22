@@ -1,0 +1,1 @@
+[{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"DEN","dest_city":"Denver, CO","flights":2492,"on_time_pct":76.8,"cancel_pct":1.1,"avg_delay":21.5},{"carrier":"OO","carrier_name":"SkyWest Airlines","dest":"ORD","dest_city":"Chicago, IL","flights":2197,"on_time_pct":77.2,"cancel_pct":1.4,"avg_delay":22.9}]
